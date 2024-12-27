@@ -78,6 +78,9 @@ ssize_t getline(char **lineptr, size_t *n, FILE *restrict fp)
 }
 #endif /* LIBSOL10_COMPAT_HAVE_GETLINE */
 
+/* open_memstream is used in some newer software */
+/* thanks to ChatGPT for help with the code */
+
 #ifndef LIBSOL10_COMPAT_HAVE_OPEN_MEMSTREAM
 FILE* open_memstream(char** ptr, size_t* size) {
 	/* Initialize the memory stream structure */

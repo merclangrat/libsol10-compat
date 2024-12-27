@@ -140,6 +140,31 @@ void test_stdio(void)
 		fclose(fp);
 		free(line);
 	}
+
+	/* open_memstream */
+	progress("stdio.h open_memstream");
+	{
+		char* buffer = NULL;
+		size_t size = 0;
+
+		FILE* fp = open_memstream(&buffer, &size);
+		assert(NULL != fp); /* Assert that the stream is successfully created */
+		assert(NULL != buffer); /* Assert that the initial buffer is NULL */
+		assert(0 == size);  /* Assert that the initial size is 0 */
+
+		/* Write to the stream */
+		fprintf(fp, "Hello, world!");
+		fflush(fp); /* Ensure the buffer is updated */
+
+		/* Assert buffer content and size */
+		assert(NULL != buffer); /* Assert buffer is now allocated */
+		assert(13 == size); /* Assert size matches the string length */
+		assert(0 == strcmp(buffer, "Hello, world!")); /* Assert content is correct */
+
+		fclose(fp);
+		free(buffer);
+	}
+
 }
 
 void test_stdlib(void)

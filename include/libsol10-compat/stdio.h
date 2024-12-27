@@ -17,6 +17,9 @@ extern ssize_t getdelim(char **lineptr, size_t *n, int delimiter,
 #ifndef LIBSOL10_COMPAT_HAVE_GETLINE
 extern ssize_t getline(char **lineptr, size_t *n, FILE *stream);
 #endif /* LIBSOL10_COMPAT_HAVE_GETLINE */
+#ifndef LIBSOL10_COMPAT_HAVE_OPEN_MEMSTREAM
+FILE* open_memstream(char** ptr, size_t* size);
+#endif /* LIBSOL10_COMPAT_HAVE_OPEN_MEMSTREAM */
 
 #ifdef __cplusplus
 }

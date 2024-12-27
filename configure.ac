@@ -1,4 +1,4 @@
-AC_INIT([libsol10-compat],[0.1.0],[pekdon@gmail.com])
+AC_INIT([libsol10-compat],[0.2.0],[pekdon@gmail.com])
 AC_CONFIG_MACRO_DIRS([m4])
 AM_INIT_AUTOMAKE([])
 LT_INIT([])
@@ -47,6 +47,8 @@ AC_CHECK_FUNC([strsep],
 	      [loc_strsep='#define LIBSOL10_COMPAT_HAVE_STRSEP 1'], [])
 AC_CHECK_FUNC([memmem],
 	      [loc_memmem='#define LIBSOL10_COMPAT_HAVE_MEMMEM 1'], [])
+AC_CHECK_FUNC([open_memstream],
+	      [loc_open_memstream='#define LIBSOL10_COMPAT_HAVE_OPEN_MEMSTREAM 1'], [])
 AC_CHECK_FUNC([flock],
 	      [loc_flock='#define LIBSOL10_COMPAT_HAVE_FLOCK 1'], [])
 AC_CHECK_FUNC([getrandom],
@@ -88,6 +90,7 @@ AC_SUBST([LIBSOL10_COMPAT_HAVE_STRCASESTR], [${loc_strcasestr}])
 AC_SUBST([LIBSOL10_COMPAT_HAVE_STRLCAT], [${loc_strlcat}])
 AC_SUBST([LIBSOL10_COMPAT_HAVE_STRSEP], [${loc_strsep}])
 AC_SUBST([LIBSOL10_COMPAT_HAVE_MEMMEM], [${loc_memmem}])
+AC_SUBST([LIBSOL10_COMPAT_HAVE_OPEN_MEMSTREAM], [${loc_open_memstream}])
 AC_SUBST([LIBSOL10_COMPAT_HAVE_FLOCK], [${loc_flock}])
 AC_SUBST([LIBSOL10_COMPAT_HAVE_GETRANDOM], [${loc_getrandom}])
 AC_SUBST([LIBSOL10_COMPAT_HAVE_GETENTROPY], [${loc_getentropy}])

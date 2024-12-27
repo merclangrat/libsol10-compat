@@ -1,6 +1,6 @@
 # $NetBSD$
 
-DISTNAME=	libsol10-compat-0.1.0
+DISTNAME=	libsol10-compat-0.2.0
 PKGREVISION=	0
 CATEGORIES=	devel
 MASTER_SITES=	https://github.com/pekdon/libsol10-compat/

@@ -83,59 +83,36 @@ ssize_t getline(char **lineptr, size_t *n, FILE *restrict fp)
 
 #ifndef LIBSOL10_COMPAT_HAVE_OPEN_MEMSTREAM
 FILE* open_memstream(char** ptr, size_t* size) {
-	/* Initialize the memory stream structure */
+	if (ptr == NULL || size == NULL) {
+		return NULL; /* Invalid arguments */
+	}
+
 	memstream_t* ms = malloc(sizeof(memstream_t));
-	if (!ms) {
+	if (NULL == ms) {
 		return NULL; /* Memory allocation failed */
 	}
 
 	ms->capacity = 256; /* Initial capacity */
 	ms->size = 0;
 	ms->buffer = malloc(ms->capacity);
-	if (!ms->buffer) {
+	if (NULL == ms->buffer) {
 		free(ms);
 		return NULL; /* Memory allocation failed */
 	}
 
 	ms->buffer[0] = '\0'; /* Null-terminate the buffer */
 
-	/* Open a temporary file */
+	/* Open a temporary file to simulate the stream */
 	FILE* stream = tmpfile();
-	if (!stream) {
+	if (NULL == stream) {
 		free(ms->buffer);
 		free(ms);
 		return NULL; /* Failed to open a temporary file */
 	}
 
-	/* Custom write function to handle dynamic buffer growth */
-	size_t write_to_memstream(const void* data, size_t size, size_t nmemb, FILE* file) {
-		size_t total_size = size * nmemb;
-		if (ms->size + total_size >= ms->capacity) {
-			size_t new_capacity = ms->capacity * 2;
-			while (ms->size + total_size >= new_capacity) {
-				new_capacity *= 2;
-			}
-			char* new_buffer = realloc(ms->buffer, new_capacity);
-			if (!new_buffer) {
-				return 0; /* Memory allocation failed */
-			}
-			ms->buffer = new_buffer;
-			ms->capacity = new_capacity;
-		}
-
-		// Copy data to the buffer
-		memcpy(ms->buffer + ms->size, data, total_size);
-		ms->size += total_size;
-		ms->buffer[ms->size] = '\0'; /* Null-terminate */
-		return nmemb;
-	}
-
-	/* Link the buffer and size to the caller's pointers */
+	/* Set output pointers */
 	*ptr = ms->buffer;
 	*size = ms->size;
-
-	/* Replace the file's default write handler with our custom one */
-	setbuf(stream, ms->buffer); /* Attach the buffer to the stream */
 
 	return stream;
 }
